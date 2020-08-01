@@ -1,0 +1,16 @@
+name: Trigger update on p5.js-website
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  ping-p5jswebsite-repo:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: PING - Dispatch initiating repository event
+        run: |
+          curl -X POST https://api.github.com/repos/yukienomiya/p5.js-website/dispatches \
+          -u ${{ secrets.ACCESS_TOKEN }} \
+          --data '{"event_type": "ping", "client_payload": { "repository": "'"$GITHUB_REPOSITORY"'" }}'
