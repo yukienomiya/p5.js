@@ -17,6 +17,7 @@ jobs:
       - name: Dispatch repository event to p5.js-website
         run: |
           curl -XPOST https://api.github.com/repos/yukienomiya/p5.js-website/dispatches \
-          -H "Accept: application/vnd.github.everest-preview+json"
+          -H "Accept: application/vnd.github.everest-preview+json" \
+          -H "Content-Type: application/json" \
           -u ${{ secrets.WORKFLOW_TESTING }} \
           --data '{"event_type": "ping"}'
