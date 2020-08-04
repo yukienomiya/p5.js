@@ -1,4 +1,4 @@
-name: Trigger update on p5.js-website
+name: Trigger documentation update in p5.js-website
 
 on:
   release:
@@ -9,14 +9,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Prova
-        run: |
-          echo ${GITHUB_REF##*/}
-      - uses: actions/checkout@v1
-      - name: Dispatch repository event to p5.js-website
+      - name: Clone repository
+        uses: actions/checkout@v1
+      - name: Dispatch event to p5.js-website
         uses: peter-evans/repository-dispatch@v1
         with:
           token: ${{ secrets.WORKFLOW_TESTING }}
           repository: yukienomiya/p5.js-website
           event-type: p5.js-release
-          client-payload: '{tag}'
+          client-payload: '{"ref": "${{ github.ref }}", "sha": "${{ github.sha }}"}'
