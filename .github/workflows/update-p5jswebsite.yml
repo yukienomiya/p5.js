@@ -9,15 +9,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v1
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - name: Dispatch repository event to p5.js-website
+      - name: Prova
         run: |
-          curl -XPOST https://api.github.com/repos/yukienomiya/p5.js-website/dispatches \
-          -H "Accept: application/vnd.github.everest-preview+json" \
-          -H "Content-Type: application/json" \
-          -u ${{ secrets.WORKFLOW_TESTING }} \
-          --data '{"event_type": "ping"}'
+        echo ${GITHUB_REF}
+        echo ${GITHUB_REF##*/}
+      - uses: actions/checkout@v1
+      - name: Dispatch repository event to p5.js-website
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.WORKFLOW_TESTING }}
+          repository: yukienomiya/p5.js-website
+          event-type: p5.js-release
+          client-payload: '{tag}'
