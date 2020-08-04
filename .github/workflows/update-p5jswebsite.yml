@@ -11,8 +11,7 @@ jobs:
     steps:
       - name: Prova
         run: |
-        echo ${GITHUB_REF}
-        echo ${GITHUB_REF##*/}
+          echo ${GITHUB_REF}
       - uses: actions/checkout@v1
       - name: Dispatch repository event to p5.js-website
         uses: peter-evans/repository-dispatch@v1
